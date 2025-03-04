@@ -1,4 +1,4 @@
-1. stdout (Standart Çıkış)**
+##1. stdout (Standart Çıkış)**
 
 Şimdiye kadar birçok komuta ve bunların çıktılarına aşina olduk ve bu da bizi bir sonraki konumuz olan I/O (giriş/çıkış) akışlarına getiriyor. Aşağıdaki komutu çalıştıralım ve bunun nasıl çalıştığını tartışalım.
 
@@ -22,7 +22,7 @@ Bu, peanuts.txt dosyasının sonuna Hello World ekleyecektir, eğer dosya zaten 
 
 Diyelim ki peanuts.txt dosyamın üzerine yazmak istemedim, neyse ki bunun için de bir yönlendirme operatörü var, >>:
 
-2. stdin (Standart Giriş)
+##2. stdin (Standart Giriş)
 
 Bir önceki dersimizde dosya ya da ekran gibi kullanabileceğimiz farklı stdout akışları olduğunu öğrenmiştik. Aynı zamanda kullanabileceğimiz farklı standart girdi (stdin) akışları da vardır. Klavye gibi aygıtlardan gelen stdin olduğunu biliyoruz, ancak dosyaları, diğer işlemlerden gelen çıktıları ve terminali de kullanabiliriz, bir örnek görelim.
 
@@ -94,7 +94,7 @@ Ekranınızda is çıktısını görmelisiniz ve peanuts.txt dosyasını açarsa
 
 kontrol: şevval dermir
 
-*5. env (Environment)*
+## 5 env (Environment)
 Aşağıdaki komutu çalıştırın:
 
     $ echo $HOME 
@@ -130,7 +130,7 @@ Bu komut, sisteminizin bir komut çalıştırırken aradığı ve iki nokta üst
 
 Diyelim ki o dizinden çalıştırmak istediğiniz tonlarca binary var, o zaman sadece PATH değişkenini değiştirerek o dizini PATH çevre değişkeninize ekleyebilirsiniz.
 
-** 6. cut**
+## 6 cut
 
 CUT Metni işlemek için kullanabileceğiniz birkaç faydalı komut öğreneceğiz. Başlamadan önce, üzerinde çalışacağımız bir dosya oluşturalım. Aşağıdaki komutu kopyalayıp yapıştırın, sonra lazy ve dog arasına bir TAB ekleyin (Ctrl-v + TAB tuşlarına aynı anda basarak).
 
@@ -157,7 +157,7 @@ Bir alana göre içerik çıkarmak için, biraz değişiklik yapmamız gerekecek
 
 Bu komut, TAB ayırıcısını ";" ayırıcısına değiştirir ve birinci alanı kestiğimiz için sonuç "The quick brown" olmalıdır.
 
-7. paste
+## 7 paste
 
 PASTE komutu, cat komutuna benzer, bir dosyadaki satırları birleştirir. Aşağıdaki içeriğe sahip yeni bir dosya oluşturalım:
 
