@@ -1,49 +1,47 @@
-##1. stdout (Standart Çıkış)**
+## 1 stdout (Standart Çıkış)**
 
 Şimdiye kadar birçok komuta ve bunların çıktılarına aşina olduk ve bu da bizi bir sonraki konumuz olan I/O (giriş/çıkış) akışlarına getiriyor. Aşağıdaki komutu çalıştıralım ve bunun nasıl çalıştığını tartışalım.
 
-$ echo Hello World
+    $ echo Hello World >peanuts.txt
 
-peanuts.txt
 
 Az önce ne oldu? Bu komutu çalıştırdığınız dizini kontrol edin ve bakın, peanuts.txt adında bir dosya göreceksiniz, bu dosyanın içine bakın ve Hello World metnini göreceksiniz. Tek bir komutta pek çok şey oldu, o yüzden şimdi bunlan inceleyelim.
 
-$ echo Hello World**
+    $ echo Hello World
 
 Bunun ekrana Merhaba Dünya yazdırdığını biliyoruz, ama nasıl? Süreçler girdi almak ve çıktı döndürmek için G/C akışlarını kullanır. Varsayılan olarak echo komutu girdiyi (standart girdi veya stdin) klavyeden alır ve çıktıyı (standart çıktı veya stdout) ekrana döndürür. Bu yüzden kabuğunuza echo Hello World yazdığınızda ekranda Hello World'u görürsünüz. Ancak, G/Ç yönlendirmesi bu varsayılan davranışı değiştirmemize izin vererek bize daha fazla dosya esnekliği sağlar.
 
 Komutun bir sonraki bölümüne geçelim:
 
-$ echo Hello World >>
+    $ echo Hello World>>peanuts.txt
 
-peanuts.txt
 
 Bu, peanuts.txt dosyasının sonuna Hello World ekleyecektir, eğer dosya zaten mevcut değilse, > yönlendiricisinde yaptığı gibi bizim için oluşturacaktır!Ancak, eğer mevcutsa üzerine yazacaktır (kullandığınız kabuğa bağlı olarak bunu önlemek için bir kabuk bayrağı ekleyebilirsiniz). Ve stdout yönlendirmesi temel olarak bu şekilde çalışır!
 
 Diyelim ki peanuts.txt dosyamın üzerine yazmak istemedim, neyse ki bunun için de bir yönlendirme operatörü var, >>:
 
-##2. stdin (Standart Giriş)
+## 2 stdin (Standart Giriş)
 
 Bir önceki dersimizde dosya ya da ekran gibi kullanabileceğimiz farklı stdout akışları olduğunu öğrenmiştik. Aynı zamanda kullanabileceğimiz farklı standart girdi (stdin) akışları da vardır. Klavye gibi aygıtlardan gelen stdin olduğunu biliyoruz, ancak dosyaları, diğer işlemlerden gelen çıktıları ve terminali de kullanabiliriz, bir örnek görelim.
 
 Bu örnek için bir önceki dersteki peanuts.txt dosyasını kullanalım, içinde Hello World metni olduğunu hatırlayın.
-$ cat *<* peanuts.txt *>*
 
-banana.txt
+    $ cat < peanuts.txt > banana.txt
+
 
 Tıpkı stdout yönlendirmesi için > kullandığımız gibi, stdin yönlendirmesi için de < kullanabiliriz.
 
 Normalde cat komutuna bir dosya gönderirsiniz ve bu dosya stdin olur, bu durumda biz peanuts.txt dosyasını stdin olarak yönlendirdik. Daha sonra cat peanuts.txt dosyasının çıktısı olan Hello World, banana.txt adlı başka bir dosyaya yönlendirilir.
 
-3. stderr (Standart Hata)
+## 3 stderr (Standart Hata)
 
 Şimdi biraz farklı bir şey deneyelim, sisteminizde var olmayan bir dizinin içeriğini listelemeye çalışalım ve çıktıyı tekrar peanuts.txt dosyasına yönlendirelim.
 
-$ Is/fake/directory> peanuts.txt
+    $ Is/fake/directory > peanuts.txt
 
 Görmeniz gereken şey şu:
 
-16: cannot access/fake/directory: No such file or directory
+    ls: cannot access /fake/directory: No such file or directory
 
 Şimdi muhtemelen bu mesajın dosyaya gönderilmesi gerekmez miydi diye
 düşünüyorsunuzdur. Aslında burada standart hata (stderr) adı verilen başka bir G/Ç akışı vardır. Varsayılan olarak, stderr çıktısını ekrana da gönderir, stdout'tan tamamen farklı bir akımdır. Bu yüzden çıktısını farklı bir şekilde yönlendirmeniz gerekir.
@@ -52,13 +50,13 @@ Ne yazık ki yönlendirici < veya > kullanmak kadar güzel değil ama oldukça y
 
 Yani şimdi stderr ımızı dosyaya yönlendirmek istiyorsak bunu yapabiliriz:
 
-$Is/fake/directory 2> peanuts.txt
+    $ Is /fake/directory 2> peanuts.txt
 
 peanuts.txt dosyasında sadece stderr mesajlarını görmelisiniz.
 
 Peki ya peanuts.txt dosyasında hem stderr hem de stdout mesajlarını görmek istersem? Bunu dosya tanımlayıcıları ile de yapmak mümkündür.
 
-$1s/fake/directory> peanuts.txt 2>&1
+    $ 1s /fake/directory > peanuts.txt 2>&1
 
 Bu. Is/fake/directory sonuçlarını peanuts.txt dosyasına gönderir ve ardından stderr'yi 2>&1 aracılığıyla stdout'a yönlendirir. Buradaki işlem sırası önemlidir. 2>&1 stderr'yi stdout'un
 
@@ -66,27 +64,27 @@ Bu. Is/fake/directory sonuçlarını peanuts.txt dosyasına gönderir ve ardınd
 
 Hem stdout hem de stderr'yi bir dosyaya yönlendirmenin daha kısa bir yolu vardır:
 
-$1s/fake/directory & peanuts.txt
+    $ 1s /fake/directory > peanuts.txt
 
 Peki ya bu saçmalıkların hiçbirini istemiyorsam ve stderr mesajlarından tamamen kurtulmak İstiyorsam? Çıktıyı /dev/null adlı özel bir dosyaya da yönlendirebilirsiniz ve bu dosya tüm girdileri atacaktır.
 
-$ ls/fake/directory 2> /dev/null
+    $ ls /fake/directory 2> /dev/null
 
-Pippe ve tee
+## 4 Pippe ve tee
 
 Şimdi biraz tesisat işlerine girelim, tam olarak değil ama biraz. Bir komut deneyelim:
 
-$ ls -la/etc
+    $ ls -la/etc
 
 Çok uzun bir öğe listesi görmelisiniz, aslında okuması biraz zor. Bu çıktıyı bir dosyaya yönlendirmek yerine, çıktıyı less gibi başka bir komutta görebilsek güzel olmaz mıydı? Yapabiliriz!
 
-$ ls -la/etc less
+    $ ls -la/etc less
 
 Dikey bir çubukla temsil edilen boru operatörü, bir komutun stdout'unu almamızı ve bunu başka bir işlemin stdin'i yapmamızı sağlar. Bu durumda, Is -la /etc komutunun stdout'unu aldık ve daha sonra bunu less komutuna pipetledik. Pipe komutu son derece kullanışlıdır ve onu sonsuza kadar kullanmaya devam edeceğiz.
 
 Peki ya komutumun çıktısını iki farklı akışa yazmak istersem? Bu tee komutu ile mümkündür.
 
-$ Is | tee peanuts.txt
+    $ Is | tee peanuts.txt
 
 Ekranınızda is çıktısını görmelisiniz ve peanuts.txt dosyasını açarsanız aynı bilgileri görmelisiniz!
 
@@ -94,12 +92,10 @@ Ekranınızda is çıktısını görmelisiniz ve peanuts.txt dosyasını açarsa
 
 kontrol: şevval dermir
 
-## 5 env (Environment)
+## 5 env (Environment)*
 Aşağıdaki komutu çalıştırın:
 
     $ echo $HOME 
-
- 
 
 Ev dizininizin yolunu görmelisiniz, benimki /home/pete gibi görünüyor.
 
@@ -130,7 +126,7 @@ Bu komut, sisteminizin bir komut çalıştırırken aradığı ve iki nokta üst
 
 Diyelim ki o dizinden çalıştırmak istediğiniz tonlarca binary var, o zaman sadece PATH değişkenini değiştirerek o dizini PATH çevre değişkeninize ekleyebilirsiniz.
 
-## 6 cut
+** 6. cut**
 
 CUT Metni işlemek için kullanabileceğiniz birkaç faydalı komut öğreneceğiz. Başlamadan önce, üzerinde çalışacağımız bir dosya oluşturalım. Aşağıdaki komutu kopyalayıp yapıştırın, sonra lazy ve dog arasına bir TAB ekleyin (Ctrl-v + TAB tuşlarına aynı anda basarak).
 
@@ -465,4 +461,6 @@ Bu, somedir içindeki tüm .txt ile biten dosyaları döndürmelidir.
 
 hazırlayan serhat töre 
 şevval demir tarafından kontrol edildi.
+
+
 
